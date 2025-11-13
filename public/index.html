@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tempo Pomodoro</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="header-content">
+        <div>
+          <h1>Tempo Pomodoro</h1>
+          <p class="tagline">Dial in your focus, earn your breaks.</p>
+        </div>
+        <button id="enable-notifications" class="ghost notifications-btn">
+          Enable Notifications
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel focus-panel">
+        <div class="panel-header">
+          <h2>Focus Timer</h2>
+          <span id="focus-status" class="status status-idle">Idle</span>
+        </div>
+        <div class="timer-display" id="focus-display">00:00:00</div>
+        <div class="timer-actions">
+          <button id="focus-start" class="primary">Start</button>
+          <button id="focus-pause">Pause</button>
+          <button id="focus-reset" class="ghost">Reset</button>
+        </div>
+        <p class="hint">Each second of focus can earn break credit.</p>
+      </section>
+
+      <section class="panel break-panel">
+        <div class="panel-header">
+          <h2>Break Clock</h2>
+          <span id="break-status" class="status status-idle">Idle</span>
+        </div>
+        <div class="break-credit">
+          <div>
+            <p class="label">Break Credit</p>
+            <p id="break-credit-display" class="metric">00:00:00</p>
+          </div>
+          <div>
+            <p class="label">Break Clock</p>
+            <p id="break-display" class="metric">00:00:00</p>
+          </div>
+        </div>
+        <div class="timer-actions">
+          <button id="break-start" class="primary">Start Break</button>
+          <button id="break-pause">Pause</button>
+          <button id="break-reset" class="ghost">Reset</button>
+        </div>
+        <p class="hint">Break credit can dip below zero if you overspend.</p>
+      </section>
+
+      <section class="panel settings-panel">
+        <h2>Settings</h2>
+        <form id="settings-form">
+          <label>
+            Focus duration
+            <div class="time-input">
+              <input type="number" id="focus-hours" min="0" value="0" aria-label="Focus hours">
+              <span>h</span>
+              <input type="number" id="focus-minutes" min="0" max="59" value="25" aria-label="Focus minutes">
+              <span>m</span>
+            </div>
+          </label>
+          <label>
+            Break earned per pomodoro
+            <div class="time-input">
+              <input type="number" id="break-hours" min="0" value="0" aria-label="Break hours">
+              <span>h</span>
+              <input type="number" id="break-minutes" min="0" max="59" value="5" aria-label="Break minutes">
+              <span>m</span>
+            </div>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="continue-after-target">
+            <span>Continue counting after timer ends (manual pause completes)</span>
+          </label>
+          <label>
+            Break credit earned each second of focus (seconds)
+            <input type="number" id="break-credit-rate" min="0" step="0.1" required>
+          </label>
+          <label>
+            Alert sound
+            <select id="alert-sound">
+              <option value="chime">Soft Chime</option>
+              <option value="bell">Bright Bell</option>
+              <option value="pulse">Deep Pulse</option>
+              <option value="mute">Mute</option>
+            </select>
+          </label>
+          <button type="submit" class="primary">Save Settings</button>
+        </form>
+      </section>
+
+      <section class="panel stats-panel">
+        <div class="panel-header">
+          <h2>Stats</h2>
+          <button id="reset-stats" class="ghost">Reset</button>
+        </div>
+        <ul class="stats-list">
+          <li>
+            <span class="label">Pomodoros completed</span>
+            <span id="stat-pomodoros" class="metric">0</span>
+          </li>
+          <li>
+            <span class="label">Total focus time</span>
+            <span id="stat-total-focus" class="metric">00:00:00</span>
+          </li>
+          <li>
+            <span class="label">Average focus length</span>
+            <span id="stat-avg-focus" class="metric">00:00:00</span>
+          </li>
+          <li>
+            <span class="label">Average break length</span>
+            <span id="stat-avg-break" class="metric">00:00:00</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="panel log-panel">
+        <div class="panel-header">
+          <h2>Recent Completions</h2>
+          <button id="clear-log" class="ghost">Clear</button>
+        </div>
+        <ul id="completion-log" class="log-list">
+          <li class="empty">No pomodoros logged yet.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
