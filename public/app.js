@@ -30,7 +30,7 @@ const MAX_LOG_ITEMS = 12;
 const soundProfiles = {
   chime: {
     type: 'triangle',
-    gain: 0.05,
+    gain: 0.1,
     pattern: [
       { freq: 880, duration: 0.25 },
       { freq: 660, duration: 0.32 },
@@ -39,7 +39,7 @@ const soundProfiles = {
   },
   bell: {
     type: 'sine',
-    gain: 0.08,
+    gain: 0.1,
     pattern: [
       { freq: 660, duration: 0.2 },
       { freq: 660, duration: 0.15 },
@@ -49,7 +49,7 @@ const soundProfiles = {
   },
   pulse: {
     type: 'square',
-    gain: 0.04,
+    gain: 0.1,
     pattern: [
       { freq: 420, duration: 0.4 },
       { freq: 0, duration: 0.12 },
