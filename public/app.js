@@ -287,6 +287,15 @@ function pauseBreakTimer() {
   }
 }
 
+function resetBreakCredit() {
+  if (!confirm('Reset break credit to zero?')) {
+    return;
+  }
+  breakCreditSeconds = 0;
+  persistBreakCredit();
+  updateBreakCreditDisplay();
+}
+
 function resetBreakTimer() {
   const wasRunning = breakState.running;
   pauseBreakTimer();
