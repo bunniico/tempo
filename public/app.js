@@ -456,7 +456,7 @@ function updateStatsDisplay() {
   statTotalFocus.textContent = formatDuration(stats.totalFocusSeconds);
   statTotalBreak.textContent = formatDuration(stats.totalBreakSeconds);
   const avgFocus = stats.pomodoros === 0 ? 0 : Math.floor(stats.totalFocusSeconds / stats.pomodoros);
-  const avgBreak = stats.breakSessions === 0 ? 0 : Math.floor(stats.totalBreakSeconds / stats.breakSessions);
+  const avgBreak = stats.breakSessions === 0 ? 0 : Math.floor(stats.totalBreakSeconds / stats.pomodoros);
   statAvgFocus.textContent = formatDuration(avgFocus);
   statAvgBreak.textContent = formatDuration(avgBreak);
 }
