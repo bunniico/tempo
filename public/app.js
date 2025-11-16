@@ -1,3 +1,22 @@
+// -- Settings --
+const settings = loadSettings();
+const settingsForm = document.getElementById('settings-form');
+const focusHoursInput = document.getElementById('focus-hours');
+const focusMinutesInput = document.getElementById('focus-minutes');
+const breakHoursInput = document.getElementById('break-hours');
+const breakMinutesInput = document.getElementById('break-minutes');
+const breakRateInput = document.getElementById('break-credit-rate');
+const alertSoundSelect = document.getElementById('alert-sound');
+const continueAfterTargetInput = document.getElementById('continue-after-target');
+const notificationBtn = document.getElementById('enable-notifications');
+const defaultSettings = {
+  focusDuration: 25 * 60,
+  breakPerPomodoro: 5 * 60,
+  breakCreditRate: 0.2,
+  alertSound: 'chime',
+  continueAfterTarget: false
+};
+
 // -- Storage --
 const storageKeys = {
   settings: 'tempo:settings',
@@ -36,25 +55,6 @@ const breakState = {
   running: false,
   timerId: null,
   lastTick: null
-};
-
-// -- Settings --
-const settings = loadSettings();
-const settingsForm = document.getElementById('settings-form');
-const focusHoursInput = document.getElementById('focus-hours');
-const focusMinutesInput = document.getElementById('focus-minutes');
-const breakHoursInput = document.getElementById('break-hours');
-const breakMinutesInput = document.getElementById('break-minutes');
-const breakRateInput = document.getElementById('break-credit-rate');
-const alertSoundSelect = document.getElementById('alert-sound');
-const continueAfterTargetInput = document.getElementById('continue-after-target');
-const notificationBtn = document.getElementById('enable-notifications');
-const defaultSettings = {
-  focusDuration: 25 * 60,
-  breakPerPomodoro: 5 * 60,
-  breakCreditRate: 0.2,
-  alertSound: 'chime',
-  continueAfterTarget: false
 };
 
 // -- Logs--
