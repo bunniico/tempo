@@ -70,18 +70,19 @@ const logList = document.getElementById('completion-log');
 const clearLogBtn = document.getElementById('clear-log');
 
 // -- Stats --
-const stats = loadStats();
-const resetStatsBtn = document.getElementById('reset-stats');
-const statPomodoros = document.getElementById('stat-pomodoros');
-const statTotalFocus = document.getElementById('stat-total-focus');
-const statAvgFocus = document.getElementById('stat-avg-focus');
-const statAvgBreak = document.getElementById('stat-avg-break');
-const defaultStats = {
+const defaultStats = { // must be initialized before calling loadStats
   pomodoros: 0,
   totalFocusSeconds: 0,
   totalBreakSeconds: 0,
   breakSessions: 0
 };
+const stats = loadStats();
+const resetStatsBtn = document.getElementById('reset-stats');
+const statPomodoros = document.getElementById('stat-pomodoros');
+const statTotalFocus = document.getElementById('stat-total-focus');
+const statTotalBreak = document.getElementById('stat-total-break');
+const statAvgFocus = document.getElementById('stat-avg-focus');
+const statAvgBreak = document.getElementById('stat-avg-break');
 
 // -- Notifications --
 const soundProfiles = {
@@ -453,6 +454,7 @@ function updateBreakCreditDisplay() {
 function updateStatsDisplay() {
   statPomodoros.textContent = stats.pomodoros;
   statTotalFocus.textContent = formatDuration(stats.totalFocusSeconds);
+  statTotalBreak.textContent = formatDuration(stats.totalBreakSeconds);
   const avgFocus = stats.pomodoros === 0 ? 0 : Math.floor(stats.totalFocusSeconds / stats.pomodoros);
   const avgBreak = stats.breakSessions === 0 ? 0 : Math.floor(stats.totalBreakSeconds / stats.breakSessions);
   statAvgFocus.textContent = formatDuration(avgFocus);
