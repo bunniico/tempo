@@ -304,13 +304,15 @@ function resetBreakCredit() {
 function resetBreakTimer() {
   const wasRunning = breakState.running;
   pauseBreakTimer();
+
+  // avoid double-counting as pause already recorded stats
   if (wasRunning) {
-    // avoid double-counting as pause already recorded stats
     stats.totalBreakSeconds = Math.max(0, stats.totalBreakSeconds - breakState.elapsedSeconds);
     stats.breakSessions = Math.max(0, stats.breakSessions - 1);
     persistStats();
     updateStatsDisplay();
   }
+
   breakState.elapsedSeconds = 0;
   breakStatus.textContent = 'Idle';
   toggleStatus(breakStatus, false);
