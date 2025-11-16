@@ -1,3 +1,4 @@
+// -- Storage --
 const storageKeys = {
   settings: 'tempo:settings',
   stats: 'tempo:stats',
@@ -5,59 +6,13 @@ const storageKeys = {
   completionLog: 'tempo:completion-log'
 };
 
-const defaultSettings = {
-  focusDuration: 25 * 60,
-  breakPerPomodoro: 5 * 60,
-  breakCreditRate: 0.2,
-  alertSound: 'chime',
-  continueAfterTarget: false
-};
 
-const defaultStats = {
-  pomodoros: 0,
-  totalFocusSeconds: 0,
-  totalBreakSeconds: 0,
-  breakSessions: 0
-};
-
-const settings = loadSettings();
-const stats = loadStats();
-const completionLog = loadCompletionLog();
-let breakCreditSeconds = loadBreakCredit();
-
-const MAX_LOG_ITEMS = 12;
-
-const soundProfiles = {
-  chime: {
-    type: 'triangle',
-    gain: 0.1,
-    pattern: [
-      { freq: 880, duration: 0.25 },
-      { freq: 660, duration: 0.32 },
-      { freq: 990, duration: 0.2 }
-    ]
-  },
-  bell: {
-    type: 'sine',
-    gain: 0.1,
-    pattern: [
-      { freq: 660, duration: 0.2 },
-      { freq: 660, duration: 0.15 },
-      { freq: 520, duration: 0.35 },
-      { freq: 660, duration: 0.2 }
-    ]
-  },
-  pulse: {
-    type: 'square',
-    gain: 0.1,
-    pattern: [
-      { freq: 420, duration: 0.4 },
-      { freq: 0, duration: 0.12 },
-      { freq: 420, duration: 0.4 }
-    ]
-  }
-};
-
+// -- Focus --
+const focusDisplay = document.getElementById('focus-display');
+const focusStatus = document.getElementById('focus-status');
+const focusStartBtn = document.getElementById('focus-start');
+const focusPauseBtn = document.getElementById('focus-pause');
+const focusResetBtn = document.getElementById('focus-reset');
 const focusState = {
   remainingSeconds: settings.focusDuration,
   elapsedSeconds: 0,
@@ -67,19 +22,8 @@ const focusState = {
   lastTick: null
 };
 
-const breakState = {
-  elapsedSeconds: 0,
-  running: false,
-  timerId: null,
-  lastTick: null
-};
-
-const focusDisplay = document.getElementById('focus-display');
-const focusStatus = document.getElementById('focus-status');
-const focusStartBtn = document.getElementById('focus-start');
-const focusPauseBtn = document.getElementById('focus-pause');
-const focusResetBtn = document.getElementById('focus-reset');
-
+// -- Break --
+let breakCreditSeconds = loadBreakCredit();
 const breakCreditDisplay = document.getElementById('break-credit-display');
 const breakDisplay = document.getElementById('break-display');
 const breakStatus = document.getElementById('break-status');
@@ -87,7 +31,16 @@ const breakStartBtn = document.getElementById('break-start');
 const breakPauseBtn = document.getElementById('break-pause');
 const breakResetBtn = document.getElementById('break-reset');
 const breakResetCreditBtn = document.getElementById('break-reset-credit');
+const breakState = {
+  elapsedSeconds: 0,
+  running: false,
+  timerId: null,
+  lastTick: null
+};
 
+// -- Settings --
+const settings = loadSettings();
+const settingsForm = document.getElementById('settings-form');
 const focusHoursInput = document.getElementById('focus-hours');
 const focusMinutesInput = document.getElementById('focus-minutes');
 const breakHoursInput = document.getElementById('break-hours');
@@ -96,18 +49,68 @@ const breakRateInput = document.getElementById('break-credit-rate');
 const alertSoundSelect = document.getElementById('alert-sound');
 const continueAfterTargetInput = document.getElementById('continue-after-target');
 const notificationBtn = document.getElementById('enable-notifications');
-const settingsForm = document.getElementById('settings-form');
-const resetStatsBtn = document.getElementById('reset-stats');
+const defaultSettings = {
+  focusDuration: 25 * 60,
+  breakPerPomodoro: 5 * 60,
+  breakCreditRate: 0.2,
+  alertSound: 'chime',
+  continueAfterTarget: false
+};
+
+// -- Logs--
+const completionLog = loadCompletionLog();
+const MAX_LOG_ITEMS = 12;
 const logList = document.getElementById('completion-log');
 const clearLogBtn = document.getElementById('clear-log');
 
+// -- Stats --
+const stats = loadStats();
+const resetStatsBtn = document.getElementById('reset-stats');
 const statPomodoros = document.getElementById('stat-pomodoros');
 const statTotalFocus = document.getElementById('stat-total-focus');
 const statAvgFocus = document.getElementById('stat-avg-focus');
 const statAvgBreak = document.getElementById('stat-avg-break');
+const defaultStats = {
+  pomodoros: 0,
+  totalFocusSeconds: 0,
+  totalBreakSeconds: 0,
+  breakSessions: 0
+};
 
+// -- Notifications --
+const soundProfiles = {
+  chime: {
+    type: 'triangle',
+    gain: 0.05,
+    pattern: [
+      { freq: 880, duration: 0.25 },
+      { freq: 660, duration: 0.32 },
+      { freq: 990, duration: 0.2 }
+    ]
+  },
+  bell: {
+    type: 'sine',
+    gain: 0.05,
+    pattern: [
+      { freq: 660, duration: 0.2 },
+      { freq: 660, duration: 0.15 },
+      { freq: 520, duration: 0.35 },
+      { freq: 660, duration: 0.2 }
+    ]
+  },
+  pulse: {
+    type: 'square',
+    gain: 0.05,
+    pattern: [
+      { freq: 420, duration: 0.4 },
+      { freq: 0, duration: 0.12 },
+      { freq: 420, duration: 0.4 }
+    ]
+  }
+};
 let alertAudioCtx = null;
 
+// -- Initialization --
 init();
 
 function init() {
