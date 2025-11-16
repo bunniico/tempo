@@ -1,3 +1,17 @@
+/**
+ * Tempo
+ * Author: Ellie Roth
+ * License: CC BY-NC-SA 
+ */
+
+// -- Storage --
+const storageKeys = {
+  settings: 'tempo:settings',
+  stats: 'tempo:stats',
+  breakCredit: 'tempo:break-credit',
+  completionLog: 'tempo:completion-log'
+};
+
 // -- Settings --
 const defaultSettings = {
   focusDuration: 25 * 60,
@@ -16,14 +30,6 @@ const breakRateInput = document.getElementById('break-credit-rate');
 const alertSoundSelect = document.getElementById('alert-sound');
 const continueAfterTargetInput = document.getElementById('continue-after-target');
 const notificationBtn = document.getElementById('enable-notifications');
-
-// -- Storage --
-const storageKeys = {
-  settings: 'tempo:settings',
-  stats: 'tempo:stats',
-  breakCredit: 'tempo:break-credit',
-  completionLog: 'tempo:completion-log'
-};
 
 
 // -- Focus --
@@ -636,7 +642,7 @@ function loadSettings() {
       continueAfterTarget: Boolean(value.continueAfterTarget)
     };
   } catch (err) {
-    console.warn('Falling back to default settings', err);
+    console.warn('Falling back to default settings: ', err);
     return { ...defaultSettings };
   }
 }
