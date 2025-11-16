@@ -86,6 +86,7 @@ const breakStatus = document.getElementById('break-status');
 const breakStartBtn = document.getElementById('break-start');
 const breakPauseBtn = document.getElementById('break-pause');
 const breakResetBtn = document.getElementById('break-reset');
+const breakResetCreditBtn = document.getElementById('break-reset-credit');
 
 const focusHoursInput = document.getElementById('focus-hours');
 const focusMinutesInput = document.getElementById('focus-minutes');
@@ -139,6 +140,7 @@ function init() {
   breakStartBtn.addEventListener('click', startBreakTimer);
   breakPauseBtn.addEventListener('click', pauseBreakTimer);
   breakResetBtn.addEventListener('click', resetBreakTimer);
+  breakResetCreditBtn.addEventListener('click', resetBreakCredit);
 
   settingsForm.addEventListener('submit', handleSettingsSubmit);
   resetStatsBtn.addEventListener('click', handleStatsReset);
