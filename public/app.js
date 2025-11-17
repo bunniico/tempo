@@ -59,7 +59,7 @@ const breakResetCreditBtn = document.getElementById('break-reset-credit');
 const breakState = {
   elapsedSeconds: 0,
   running: false,
-  timerId: null,
+  frameId: null,
   lastTick: null
 };
 
@@ -270,14 +270,18 @@ function completePomodoro() {
 }
 
 function startBreakTimer() {
-  if (breakState.running) return;
+  if (breakState.running) {
+    return;
+  }
+
   breakState.running = true;
   breakState.lastTick = Date.now();
   breakStatus.textContent = 'Running';
+
   toggleStatus(breakStatus, true);
+
   breakStartBtn.disabled = true;
   breakPauseBtn.disabled = false;
-  breakState.timerId = setInterval(breakTick, 1000);
   breakTick();
 }
 
@@ -330,6 +334,11 @@ function resetBreakTimer() {
 function breakTick() {
   if (!breakState.running) return;
   applyBreakDelta();
+  if (typeof requestAnimationFrame === 'function') {
+    breakState.frameId = requestAnimationFrame(breakTick);
+  } else {
+    breakState.frameId = setTimeout(breakTick, 1000);
+  }
 }
 
 function applyBreakDelta() {
@@ -351,9 +360,13 @@ function applyBreakDelta() {
 }
 
 function stopBreakInterval() {
-  if (breakState.timerId) {
-    clearInterval(breakState.timerId);
-    breakState.timerId = null;
+  if (breakState.frameId) {
+    if (typeof cancelAnimationFrame === 'function') {
+      cancelAnimationFrame(breakState.frameId);
+    } else {
+      clearTimeout(breakState.frameId);
+    }
+    breakState.frameId = null;
   }
   breakState.lastTick = null;
 }
