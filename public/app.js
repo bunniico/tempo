@@ -85,6 +85,9 @@ const statTotalBreak = document.getElementById('stat-total-break');
 const statAvgFocus = document.getElementById('stat-avg-focus');
 const statAvgBreak = document.getElementById('stat-avg-break');
 
+// -- Exports --
+const exportRecentCompletionsBtn = document.getElementById('export-recentCompletions');
+
 // -- Notifications --
 const soundProfiles = {
     chime: {
@@ -158,6 +161,9 @@ function init() {
     if (clearLogBtn) {
         clearLogBtn.addEventListener('click', handleClearLog);
     }
+
+    exportRecentCompletionsBtn.addEventListener('click', downloadCompletionLogCSV);
+    
     setupNotificationButton();
     document.addEventListener('pointerdown', warmAudioContext, { once: true });
 }
